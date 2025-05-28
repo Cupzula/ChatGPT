@@ -3,6 +3,7 @@ info:
   title: Flexible Joke API
   description: Fetches jokes from JokeAPI with options to select category, joke type, and filter blacklist flags.
   version: 1.1.0
+
 servers:
   - url: https://v2.jokeapi.dev
     description: JokeAPI server
