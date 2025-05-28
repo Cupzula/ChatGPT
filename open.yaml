@@ -1,0 +1,64 @@
+openapi: 3.1.0
+info:
+  title: Flexible Joke API
+  description: Fetches jokes from JokeAPI with options to select category, joke type, and filter blacklist flags.
+  version: 1.1.0
+servers:
+  - url: https://v2.jokeapi.dev
+    description: JokeAPI server
+
+paths:
+  /joke/{category}:
+    get:
+      operationId: getCustomJoke
+      summary: Fetch a joke with custom filters
+      description: >
+        Fetches a joke from a specific category. You can also filter by joke type (single or twopart)
+        and optionally include or exclude controversial categories using blacklist flags.
+      parameters:
+        - name: category
+          in: path
+          required: true
+          description: The category of the joke.
+          schema:
+            type: string
+            enum: [Programming, Misc, Dark, Pun, Spooky, Christmas, Any]
+
+        - name: type
+          in: query
+          required: false
+          description: Type of joke: single (one-liner) or twopart (setup + delivery).
+          schema:
+            type: string
+            enum: [single, twopart]
+
+        - name: blacklistFlags
+          in: query
+          required: false
+          description: >
+            Comma-separated list of flags to exclude. Options: nsfw, religious, political, racist, sexist, explicit.
+            Leave blank to include everything.
+          schema:
+            type: string
+            example: nsfw,political
+
+      responses:
+        '200':
+          description: A joke response from JokeAPI
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                  category:
+                    type: string
+                  type:
+                    type: string
+                  joke:
+                    type: string
+                  setup:
+                    type: string
+                  delivery:
+                    type: string
